@@ -3,7 +3,7 @@ const Posts = require('./schemas/posts')
 const app = express()
 const port = process.env.PORT || 3000
 
-const connect = require("./schemas/index");
+const connect = require("./schemas");
 connect();
 
 app.use(express.urlencoded({extended: false}))

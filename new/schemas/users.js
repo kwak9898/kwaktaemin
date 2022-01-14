@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
 
-  const UserSchema = new mongoose.Schema({
-    username: {
-            type: String
-        },
-    password: {
-            type: String
-        },
-    });
+  const { Schema } = mongoose;
+  const UserSchema = new Schema({
+    username: String,
+    password: String
+  });
 
     UserSchema.virtual("userId").get(function () {
         return this._id.toHexString();
@@ -16,4 +13,4 @@ const mongoose = require("mongoose");
         virtuals: true,
       });
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Users", UserSchema);

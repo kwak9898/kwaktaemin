@@ -45,10 +45,10 @@
 
         $(document).ready(function () {
             if (localStorage.getItem("token")) {
-                getSelf(function () {
+                // getSelf(function () {
                     $('#login').hide()
                     $('#logout').show()
-                })
+                // })
             } else {
                 $('#post').hide()
             }
@@ -74,7 +74,8 @@
         }
 
         function make_card(posts, date) {
-            let htmlTemp = `<tr class ="posts" onclick = "window.location.href = '/comment/${posts["name"]}'">
+            let htmlTemp = `<tr class ="posts" onclick = "window.location.href = '/comment/${posts["postid"]}'">
+                                <td>${posts["postId"]}</td>
                                 <td>${posts["name"]}</td>
                                 <td>${posts["title"]}</td>
                                 <td>${date}</td>
@@ -99,6 +100,7 @@
         <table class="table">
           <thead>
             <tr>
+              <th scope="col">No.</th>
               <th scope="col">작성자명</th>
               <th scope="col">제목</th>
               <th scope="col">날짜</th>
@@ -106,6 +108,7 @@
           </thead>
           <tbody id="postlist">
             <tr>
+              <td>No.</td>
               <td>이름</td>
               <td>제목</td>
               <td id="date">날짜</td>

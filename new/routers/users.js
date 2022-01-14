@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require('../schemas/users')
+const Users = require('../schemas/users')
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 
@@ -17,12 +17,17 @@ router.post("/users", async (req, res) => {
     
         if (password !== confirm) {
           res.status(400).send({
-            errorMessage: "패스워드가 일치하지 않습니다.",
+            errorMessage: "비밀번호가 일치하지 않습니다.",
+          });
+          return;
+        } else if (username === password) {
+          res.status(400).send({
+            errorMessage: "아이디와 비밀번호를 다르게 해주세요."
           });
           return;
         }
     
-        const existUsers = await User.find({username});
+        const existUsers = await Users.find({username});
         if (existUsers.length) {
           res.status(400).send({
             errorMessage: "이미 가입된 아이디가 있습니다.",
@@ -30,7 +35,7 @@ router.post("/users", async (req, res) => {
           return;
         }
     
-        const user = new User({ username, password });
+        const user = new Users({ username, password });
         await user.save();
     
         res.status(201).send({});
@@ -51,7 +56,7 @@ router.post("/users", async (req, res) => {
       try {
         const { username, password } = await postLoginSchema.validateAsync(req.body);
     
-        const user = await User.findOne({ username, password }).exec();
+        const user = await Users.findOne({ username, password }).exec();
     
         if (!user) {
           res.status(400).send({
@@ -71,5 +76,12 @@ router.post("/users", async (req, res) => {
         });
       }
     });
+    
+    // router.get("/users/me", userMiddleware, async (req, res) => {
+    //   const { user } = res.locals;
+    //   res.send({
+    //     user,
+    //   });
+    // });
 
 module.exports = router;

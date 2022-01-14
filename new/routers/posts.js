@@ -1,6 +1,7 @@
 const express = require("express");
 const Posts = require('../schemas/posts')
 const router = express.Router();
+const userMiddleware = require("../middlewares/middle");
 
 router.get("/posts", async (req, res, next) => {
   try {
@@ -21,10 +22,10 @@ router.get("/posts/:name", async (req, res) => {
   res.json({ posts: posts });
 });
 
-router.post ("/posts", async (req, res) => {
+router.post ("/posts", userMiddleware, async (req, res) => {
      try {
         console.log(req.body)
-        post = await Posts.create({ 
+          await Posts.create({ 
           title: req.body.title,
           content: req.body.content,
           name: req.body.name,
@@ -38,7 +39,7 @@ router.post ("/posts", async (req, res) => {
      }
 })
 
-router.patch("/posts/:name", async (req, res) => {
+router.patch("/posts/:name", userMiddleware, async (req, res) => {
   const { name } = req.params;
   const { password, title, content} = req.body;
 
@@ -52,7 +53,7 @@ router.patch("/posts/:name", async (req, res) => {
   }
 })
 
-router.delete("/posts/:name", async (req, res) => {
+router.delete("/posts/:name", userMiddleware, async (req, res) => {
   const { name } = req.params;
   const { password } = req.body;
 

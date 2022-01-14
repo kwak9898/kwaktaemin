@@ -36,10 +36,10 @@
     </style>
     <script>
       if (localStorage.getItem("token")) {
-        getSelf(function () {
+        // getSelf(function () {
           alert("이미 로그인이 되어있습니다. 게시글로 이동합니다.");
           window.location.replace("/home");
-        });
+        // });
       }
 
       function login() {
